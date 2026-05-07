@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>⚽ StarApps Fooseball League 2026</title>
-<link rel="icon" type="image/jpeg" href="logo.jpeg" />
+<link rel="icon" type="image/png" href="logo.png" />
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -40,6 +40,7 @@
   .phase { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 20px; position: relative; z-index: 1; }
 
   /* ── WAITING ── */
+  .site-logo  { width: 72px; height: 72px; border-radius: 16px; object-fit: cover; margin-bottom: 16px; box-shadow: 0 0 24px rgba(255,215,0,0.18); }
   .wait-title { font-size: 2.6rem; font-weight: 900; text-align: center; margin-bottom: 6px; }
   .wait-sub   { text-align: center; color: #8a8aa0; font-size: 0.9rem; margin-bottom: 32px; }
 
@@ -265,6 +266,7 @@
 
 <!-- ══ WAITING ══════════════════════════════════════════ -->
 <div id="phase-waiting" class="phase">
+  <img src="logo.png" alt="StarApps" class="site-logo" />
   <div class="wait-title gold-text">⚽ StarApps Fooseball League 2026</div>
   <div class="wait-sub">Teams are drawn automatically at 3:00 PM — no buttons, no waiting</div>
 
@@ -307,6 +309,7 @@
 
 <!-- ══ DONE ═════════════════════════════════════════════ -->
 <div id="phase-done" class="phase" hidden>
+  <img src="logo.png" alt="StarApps" class="site-logo" />
   <div class="done-title gold-text">🎉 Teams Are Set!</div>
   <div class="done-sub">Let the foosball begin — good luck to everyone!</div>
   <div class="final-grid" id="finalGrid"></div>
