@@ -390,29 +390,13 @@ function hide(id) { document.getElementById(id).hidden = true; }
 
 /* ─── Compute draw ───────────────────────────────────── */
 function computeDraw() {
-  const defenders = shuffle(PLAYERS.filter(p => p.role === "def"));
-  const others    = shuffle(PLAYERS.filter(p => p.role !== "def"));
-  const slots     = shuffle([...TEAM_NAMES]);
-  const teams     = [];
-
-  // Fill as many def+non-def pairs as possible
-  const pairs = Math.min(defenders.length, others.length);
-  for (let i = 0; i < pairs; i++) {
-    teams.push({ teamName: slots[i], members: [others[i], defenders[i]] });
-  }
-
-  // Pair up any leftovers together (e.g. 2 extra non-defenders become 1 more team)
-  const leftovers = [...others.slice(pairs), ...defenders.slice(pairs)];
-  for (let i = 0; i < leftovers.length; i += 2) {
-    const slotIdx = teams.length;
-    const teamName = slots[slotIdx] || `Team ${slotIdx + 1}`;
-    teams.push({
-      teamName,
-      members: leftovers.slice(i, i + 2)
-    });
-  }
-
-  return teams;
+  return [
+    { teamName: "Phoenix",  members: [{ name: "Abhishek",  role: "rou" }, { name: "Shashank",  role: "def" }] },
+    { teamName: "Dynamo",   members: [{ name: "Lax",       role: "att" }, { name: "Santosh",   role: "def" }] },
+    { teamName: "Blitz",    members: [{ name: "Kashish",   role: "rou" }, { name: "Fahad",     role: "def" }] },
+    { teamName: "Strikers", members: [{ name: "Yadnesh",   role: "def" }, { name: "Shashwat",  role: "rou" }] },
+    { teamName: "Vortex",   members: [{ name: "Arun",      role: "att" }, { name: "Aishwarya", role: "def" }] },
+  ];
 }
 
 /* ─── Flash overlay ──────────────────────────────────── */
@@ -693,29 +677,11 @@ function runDraw(teams) {
 /* ─── Init ───────────────────────────────────────────── */
 renderChips();
 
-// Check for a draw already done today
-let todaysDraw = null;
-try {
-  const raw = localStorage.getItem(DRAW_KEY);
-  if (raw) {
-    const parsed = JSON.parse(raw);
-    if (parsed.date === new Date().toDateString()) todaysDraw = parsed;
-  }
-} catch (e) {}
-
-if (todaysDraw) {
-  // Already drawn today on this device — go straight to results
-  showDone(todaysDraw.teams, todaysDraw.ts);
-} else if (drawDeadline() <= Date.now()) {
-  // Past 3 PM, no saved draw — compute and show results immediately (no animation)
-  const teams = computeDraw();
-  const ts = Date.now();
-  try { localStorage.setItem(DRAW_KEY, JSON.stringify({ teams, ts, date: new Date().toDateString() })); } catch (e) {}
-  showDone(teams, ts);
-} else {
-  // Waiting for 3:00 PM — show countdown, fire animation when it hits
-  startCountdown(() => runDraw(computeDraw()));
-}
+// Always show the finalised draw result immediately
+const teams = computeDraw();
+const ts = Date.now();
+try { localStorage.setItem(DRAW_KEY, JSON.stringify({ teams, ts, date: new Date().toDateString() })); } catch (e) {}
+showDone(teams, ts);
 </script>
 </body>
 </html>
