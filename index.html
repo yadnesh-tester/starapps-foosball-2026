@@ -375,9 +375,7 @@ function getDaySeed() {
   return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
 }
 
-// ?test mode uses a fresh random seed every reload so teams differ each time
-const isTest = location.search.includes("test");
-const rng = makePrng(isTest ? (Date.now() & 0xFFFFFFFF) : getDaySeed());
+const rng = makePrng(getDaySeed());
 
 function shuffle(arr) {
   const a = [...arr];
@@ -705,10 +703,7 @@ try {
   }
 } catch (e) {}
 
-if (isTest) {
-  // Test mode: always run full animation with a fresh random draw
-  runDraw(computeDraw());
-} else if (todaysDraw) {
+if (todaysDraw) {
   // Already drawn today on this device — go straight to results
   showDone(todaysDraw.teams, todaysDraw.ts);
 } else if (drawDeadline() <= Date.now()) {
