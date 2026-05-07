@@ -331,7 +331,7 @@ const PLAYERS = [
   { name: "Kashish",   role: "def" },
 ];
 const TEAM_NAMES = ["Strikers", "Blitz", "Dynamo", "Vortex", "Phoenix"];
-const DRAW_KEY   = "foosball_draw_230pm_v1";
+const DRAW_KEY   = "foosball_draw_3pm_v1";
 const DRAW_HOUR  = 15;
 const DRAW_MIN   = 0;
 
@@ -705,16 +705,20 @@ try {
   }
 } catch (e) {}
 
-if (!isTest && todaysDraw) {
+if (isTest) {
+  // Test mode: always run full animation with a fresh random draw
+  runDraw(computeDraw());
+} else if (todaysDraw) {
+  // Already drawn today on this device — go straight to results
   showDone(todaysDraw.teams, todaysDraw.ts);
-} else if (!isTest && drawDeadline() <= Date.now()) {
-  // Already past 3:00 PM but no saved draw — run now
-  runDraw(computeDraw());
-} else if (isTest) {
-  // Test mode: skip countdown, run full animation immediately
-  runDraw(computeDraw());
+} else if (drawDeadline() <= Date.now()) {
+  // Past 3 PM, no saved draw — compute and show results immediately (no animation)
+  const teams = computeDraw();
+  const ts = Date.now();
+  try { localStorage.setItem(DRAW_KEY, JSON.stringify({ teams, ts, date: new Date().toDateString() })); } catch (e) {}
+  showDone(teams, ts);
 } else {
-  // Waiting for 2:30 PM
+  // Waiting for 3:00 PM — show countdown, fire animation when it hits
   startCountdown(() => runDraw(computeDraw()));
 }
 </script>
