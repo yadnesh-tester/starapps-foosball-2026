@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>⚽ StarApps Fooseball League 2026</title>
+<link rel="icon" type="image/jpeg" href="logo.jpeg" />
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -265,11 +266,11 @@
 <!-- ══ WAITING ══════════════════════════════════════════ -->
 <div id="phase-waiting" class="phase">
   <div class="wait-title gold-text">⚽ StarApps Fooseball League 2026</div>
-  <div class="wait-sub">Teams are drawn automatically at 2:30 PM — no buttons, no waiting</div>
+  <div class="wait-sub">Teams are drawn automatically at 3:00 PM — no buttons, no waiting</div>
 
   <div class="cd-ring">
     <div id="cdTime">--:--:--</div>
-    <div id="cdLabel">until the 2:30 PM draw</div>
+    <div id="cdLabel">until the 3:00 PM draw</div>
   </div>
 
   <div class="section-label" style="margin-bottom:14px;">Today's Players</div>
@@ -328,8 +329,8 @@ const PLAYERS = [
 ];
 const TEAM_NAMES = ["Strikers", "Blitz", "Dynamo", "Vortex", "Phoenix"];
 const DRAW_KEY   = "foosball_draw_230pm_v1";
-const DRAW_HOUR  = 14;
-const DRAW_MIN   = 30;
+const DRAW_HOUR  = 15;
+const DRAW_MIN   = 0;
 
 const ROLE_LABEL = { att: "⚔️ Attacker", rou: "⭐ All-Rounder", def: "🛡️ Defender" };
 const ROLE_SHORT = { att: "Attacker",     rou: "All-Rounder",    def: "Defender" };
@@ -703,7 +704,7 @@ try {
 if (!isTest && todaysDraw) {
   showDone(todaysDraw.teams, todaysDraw.ts);
 } else if (!isTest && drawDeadline() <= Date.now()) {
-  // Already past 2:30 PM but no saved draw — run now
+  // Already past 3:00 PM but no saved draw — run now
   runDraw(computeDraw());
 } else if (isTest) {
   // Test mode: skip countdown, run full animation immediately
