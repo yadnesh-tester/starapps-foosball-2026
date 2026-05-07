@@ -268,14 +268,14 @@
 <div id="phase-waiting" class="phase">
   <img src="logo.png" alt="StarApps" class="site-logo" />
   <div class="wait-title gold-text">⚽ StarApps Fooseball League 2026</div>
-  <div class="wait-sub">Teams are drawn automatically at 3:00 PM — no buttons, no waiting</div>
+  <div class="wait-sub">Draw happens at 3:00 PM sharp. See you on the table!</div>
 
   <div class="cd-ring">
     <div id="cdTime">--:--:--</div>
-    <div id="cdLabel">until the 3:00 PM draw</div>
+    <div id="cdLabel">until 3:00 PM</div>
   </div>
 
-  <div class="section-label" style="margin-bottom:14px;">Today's Players</div>
+  <div class="section-label" style="margin-bottom:14px;">Players</div>
   <div class="chips-wrap" id="chipsWrap"></div>
 </div>
 
@@ -291,17 +291,17 @@
   <!-- Balls shuffle -->
   <div id="subphase-shuffle" hidden>
     <div class="shuffle-title">🎰 Drawing Teams...</div>
-    <div class="shuffle-hint" id="shuffleHint">Mixing all players — stay tuned!</div>
+    <div class="shuffle-hint" id="shuffleHint">Picking your fate...</div>
     <div id="arena"></div>
     <div class="shuffle-footer">
-      <div class="shuffle-status" id="shuffleStatus">Finding perfect matches...</div>
+      <div class="shuffle-status" id="shuffleStatus">Working on it...</div>
       <div class="prog-wrap"><div class="prog-bar" id="progBar"></div></div>
     </div>
   </div>
 
   <!-- Team reveals -->
   <div id="subphase-reveal" hidden>
-    <div class="reveal-title">🎯 Revealing Teams...</div>
+    <div class="reveal-title">🎯 Here we go!</div>
     <div class="reveal-grid" id="revealGrid"></div>
   </div>
 
@@ -311,7 +311,7 @@
 <div id="phase-done" class="phase" hidden>
   <img src="logo.png" alt="StarApps" class="site-logo" />
   <div class="done-title gold-text">🎉 Teams Are Set!</div>
-  <div class="done-sub">Let the foosball begin — good luck to everyone!</div>
+  <div class="done-sub">Good luck out there. May the best team win!</div>
   <div class="final-grid" id="finalGrid"></div>
   <div class="done-ts" id="doneTs"></div>
 </div>
@@ -580,12 +580,12 @@ function runDraw(teams) {
 
     // Progress bar + hint messages
     const hints = [
-      "Mixing all players randomly...",
-      "Shuffling the pool...",
-      "Pairing attackers and defenders...",
-      "Almost locked in...",
-      "Final combinations loading...",
-      "Sealing the teams...",
+      "Let's go...",
+      "No peeking...",
+      "This is taking forever lol...",
+      "Almost there...",
+      "Ok for real this time...",
+      "Locking it in...",
     ];
     const SHUFFLE_MS = 20000;
     const t0 = Date.now();
@@ -594,6 +594,7 @@ function runDraw(teams) {
       document.getElementById("progBar").style.width = pct + "%";
       document.getElementById("shuffleStatus").textContent =
         hints[Math.min(Math.floor((pct / 100) * hints.length), hints.length - 1)];
+
     }, 600);
 
     setTimeout(() => {
@@ -602,7 +603,7 @@ function runDraw(teams) {
       clearInterval(progInterval);
       balls.forEach(b => b.classList.remove("glow"));
       document.getElementById("progBar").style.width = "100%";
-      document.getElementById("shuffleStatus").textContent = "Teams locked! Revealing now...";
+      document.getElementById("shuffleStatus").textContent = "Done. Check your team!";
       setTimeout(beginReveal, 900);
     }, SHUFFLE_MS);
   }
